@@ -24,9 +24,15 @@ var milk = (function(){
 
     /* 
      * JavaScipt Class Includes 
+
+     https://x443.wordpress.com/2012/12/01/why-you-should-use-xmlhttprequest-asynchronously/
+
+     https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Synchronous_and_Asynchronous_Requests
+     
      */
 
     var req = new XMLHttpRequest();
+
     req.open("GET", "Class.js", false); req.send(); eval(req.responseText);
     req.open("GET", "Shaker.js", false); req.send(); eval(req.responseText);
     req.open("GET", "Music.js", false); req.send(); eval(req.responseText);
@@ -42,6 +48,8 @@ var milk = (function(){
     req.open("GET", "PipelineContext.js", false); req.send(); eval(req.responseText);
     req.open("GET", "TimeKeeper.js", false); req.send(); eval(req.responseText);
     req.open("GET", "Presets.js", false); req.send(); eval(req.responseText);
+
+
  
 
     /* 
