@@ -2,21 +2,19 @@ var HTML5Audio = Class.extend({
   init: function () {
     this.context = null;
     this.source = null;
-
-    if (typeof webkitAudioContext != "undefined")
-      this.audioAPI = new WebkitHTML5Audio();
-    else this.audioAPI = new MozAudioAPI();
+    this.audioAPI = new WebAudioAPI();
   },
 });
 
-var WebkitAudioAPI = Class.extend({
+var WebAudioAPI = Class.extend({
   init: function () {
-    this.context = new webkitAudioContext();
-    this.source = context.createBufferSource();
-    this.processor = context.createJavaScriptNode(512);
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    this.context = new AudioContext();
+    this.source = this.context.createBufferSource();
+    this.processor = this.context.createScriptProcessor(512);
     this.processor.onaudioprocess = this.audioAvailable;
-    this.source.connect(processor);
-    this.processor.connect(context.destination);
+    this.source.connect(this.processor);
+    this.processor.connect(this.context.destination);
     this.loadSample("song.ogg");
   },
 
@@ -28,8 +26,8 @@ var WebkitAudioAPI = Class.extend({
     request.onload = function () {
       this.context.decodeAudioData(request.response, function (buffer) {
         this.source.buffer = buffer;
-        this.source.looping = true;
-        this.source.noteOn(0);
+        this.source.loop = true;
+        this.source.start(0);
       });
     };
     request.send();
@@ -49,33 +47,5 @@ var WebkitAudioAPI = Class.extend({
 
     if (typeof shaker != "undefined")
       shaker.music.addPCM(inputArrayL, inputArrayR);
-  },
-});
-
-var MozAudioAPI = Class.extend({
-  init: function () {
-    this.context = new Audio();
-    this.context.src = "song.ogg";
-    this.context.addEventListener("MozAudioAvailable", this.audioAvailable);
-    this.context.addEventListener("loadedmetadata", this.loadedMetadata, false);
-    this.context.play();
-  },
-
-  loadedMetadata: function () {
-    this.channels = this.context.mozChannels;
-    this.rate = this.context.mozSampleRate;
-    this.frameBufferLength = this.context.mozFrameBufferLength;
-  },
-
-  audioAvailable: function (event) {
-    var fb = event.frameBuffer;
-    var signalL = new Float32Array(fb.length / 2);
-    var signalR = new Float32Array(fb.length / 2);
-    for (var i = 0; i < this.frameBufferLength / 2; i++) {
-      signalL[i] = fb[2 * i];
-      signalR[i] = fb[2 * i + 1];
-    }
-
-    if (typeof shaker != "undefined") shaker.music.addPCM(signalL, signalR);
   },
 });
