@@ -10,22 +10,29 @@ var WebAudioAPI = Class.extend({
   init: function () {
     const AudioContext = window.AudioContext || window.webkitAudioContext;
     this.context = new AudioContext();
+    console.log(this.context);
+
     this.source = this.context.createBufferSource();
+    console.log(this.source);
+
     this.processor = this.context.createScriptProcessor(512);
+    console.log(this.processor);
+
     this.processor.onaudioprocess = this.audioAvailable;
+    console.log(this.audioAvailable);
+
     this.source.connect(this.processor);
     this.processor.connect(this.context.destination);
-    this.loadSample("song.ogg");
-  },
 
-  loadSample: function (url) {
     var request = new XMLHttpRequest();
-    request.open("GET", url, true);
+    request.open("GET", "song.ogg", true);
     request.responseType = "arraybuffer";
-
     request.onload = function () {
-      this.context.decodeAudioData(request.response, function (buffer) {
-        this.source.buffer = buffer;
+      var audioData = request.response;
+
+      this.context.decodeAudioData(audioData).then(function (decodedData) {
+        // use the decoded data here
+        this.source.buffer = decodedData;
         this.source.loop = true;
         this.source.start(0);
       });

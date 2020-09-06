@@ -58,7 +58,7 @@
     // One-liner to resume playback when user interacted with the page.
     document.querySelector('canvas').addEventListener('click', function() {
       console.log('milk.U_COLOR_ARRAY' + milk.U_COLOR_ARRAY)
-      milk.audio.context.resume().then(() => {
+      milk.initAudio.then(() => {
         console.log('Playback resumed successfully');
       });
     });

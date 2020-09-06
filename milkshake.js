@@ -106,7 +106,7 @@ var milk = (function () {
     try {
       initGL(function () {
         shaker = new Shaker();
-        audio = new HTML5Audio();
+        // audio = new HTML5Audio();
         animationLoop();
         setInterval(function () {
           shaker.selectNext(true);
@@ -120,6 +120,16 @@ var milk = (function () {
         canvas.innerHTML +
         "</div>";
     }
+  }
+
+  function initAudio() {
+    try {
+      audio = new HTML5Audio();
+    } catch (e) {
+      console.log("HTML5Audio Initialization Failed: " + e);
+      return false;
+    }
+    return true;
   }
 
   var requestAnimFrame =
