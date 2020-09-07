@@ -1,25 +1,17 @@
-var HTML5Audio = Class.extend({
-  init: function () {
-    this.context = null;
-    this.source = null;
-    this.audioAPI = new WebAudioAPI();
-  },
-});
-
-var WebAudioAPI = Class.extend({
-  init: function () {
+export default class WebAudioAPI {
+  constructor() {
     const AudioContext = window.AudioContext || window.webkitAudioContext;
     this.context = new AudioContext();
-    console.log(this.context);
+    console.log(context);
 
-    this.source = this.context.createBufferSource();
-    console.log(this.source);
+    this.source = context.createBufferSource();
+    console.log(source);
 
-    this.processor = this.context.createScriptProcessor(512);
-    console.log(this.processor);
+    this.processor = context.createScriptProcessor(512);
+    console.log(processor);
 
-    this.processor.onaudioprocess = this.audioAvailable;
-    console.log(this.audioAvailable);
+    this.processor.onaudioprocess = audioAvailable;
+    console.log(audioAvailable);
 
     this.source.connect(this.processor);
     this.processor.connect(this.context.destination);
@@ -38,9 +30,9 @@ var WebAudioAPI = Class.extend({
       });
     };
     request.send();
-  },
+  }
 
-  audioAvailable: function (event) {
+  audioAvailable(event) {
     var inputArrayL = event.inputBuffer.getChannelData(0);
     var inputArrayR = event.inputBuffer.getChannelData(1);
     var outputArrayL = event.outputBuffer.getChannelData(0);
@@ -54,5 +46,5 @@ var WebAudioAPI = Class.extend({
 
     if (typeof shaker != "undefined")
       shaker.music.addPCM(inputArrayL, inputArrayR);
-  },
-});
+  }
+}

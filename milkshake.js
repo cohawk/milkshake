@@ -1,96 +1,20 @@
-/**
- * milkshake -- WebGL Milkdrop-esque visualisation (port of projectM)
- * Copyright (C)2011 Matt Gattis and contributors
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * See 'LICENSE.txt' included within this release
- *
- */
+import Shaker from "./Shaker";
+import Music from "./Music";
+// import HTML5Audio from "./HTML5Audio";
+import Renderer from "./Renderer";
+/*
+import Renderable from "./Renderable"
+import RenderItemMatcher from "./RenderItemMatcher"
+import RenderItemMergeFunction from "./RenderItemMergeFunction"
+import Variables from "./Variables"
+import MilkDropPreset from "./MilkDropPreset"
+import PerPixelMesh from "./PerPixelMesh"
+import PipelineContext from "./PipelineContext"
+import TimeKeeper from "./TimeKeeper"
+import Presets from "./Presets"
+*/
 
 var milk = (function () {
-  /* 
-   * JavaScipt Class Includes 
-
-   https://x443.wordpress.com/2012/12/01/why-you-should-use-xmlhttprequest-asynchronously/
-
-   https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Synchronous_and_Asynchronous_Requests
-   
-   */
-
-  var req = new XMLHttpRequest();
-
-  req.open("GET", "Class.js", false);
-  req.send();
-  eval(req.responseText);
-
-  req.open("GET", "Shaker.js", false);
-  req.send();
-  eval(req.responseText);
-
-  req.open("GET", "Music.js", false);
-  req.send();
-  eval(req.responseText);
-
-  req.open("GET", "HTML5Audio.js", false);
-  req.send();
-  eval(req.responseText);
-
-  req.open("GET", "SoundCloudAudio.js", false);
-  req.send();
-  eval(req.responseText);
-
-  req.open("GET", "Renderer.js", false);
-  req.send();
-  eval(req.responseText);
-
-  req.open("GET", "Renderable.js", false);
-  req.send();
-  eval(req.responseText);
-
-  req.open("GET", "RenderItemMatcher.js", false);
-  req.send();
-  eval(req.responseText);
-
-  req.open("GET", "RenderItemMergeFunction.js", false);
-  req.send();
-  eval(req.responseText);
-
-  req.open("GET", "Variables.js", false);
-  req.send();
-  eval(req.responseText);
-
-  req.open("GET", "MilkDropPreset.js", false);
-  req.send();
-  eval(req.responseText);
-
-  req.open("GET", "PerPixelMesh.js", false);
-  req.send();
-  eval(req.responseText);
-
-  req.open("GET", "PipelineContext.js", false);
-  req.send();
-  eval(req.responseText);
-
-  req.open("GET", "TimeKeeper.js", false);
-  req.send();
-  eval(req.responseText);
-
-  req.open("GET", "Presets.js", false);
-  req.send();
-  eval(req.responseText);
-
   /*
    * Core Animation Interface
    */

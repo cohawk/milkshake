@@ -1,26 +1,5 @@
-/**
- * milkshake -- WebGL Milkdrop-esque visualisation (port of projectM)
- * Copyright (C)2011 Matt Gattis and contributors
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * See 'LICENSE.txt' included within this release
- *
- */
-
-var Music = Class.extend({
-  init: function () {
+export default class Music {
+  constructor() {
     this.vol_instant = 0;
     this.vol_history = 0;
     this.vol_buffer = new Float32Array(80);
@@ -43,18 +22,18 @@ var Music = Class.extend({
 
     this.pcmdataL = new Float32Array(this.numsamples);
     this.pcmdataR = new Float32Array(this.numsamples);
-  },
+  }
 
-  reset: function () {
+  reset() {
     this.bass = 0;
     this.mid = 0;
     this.treb = 0;
     this.bass_att = 0;
     this.mid_att = 0;
     this.treb_att = 0;
-  },
+  }
 
-  addPCM: function (left, right) {
+  addPCM(left, right) {
     if (this.numsamples == left.length && this.numsamples.right == right.length)
       for (var i = 0; i < this.numsamples; i++) {
         this.PCML[i] = left[i];
@@ -76,9 +55,9 @@ var Music = Class.extend({
       this.pcmdataL[i] = this.PCML[this.numsamples - 1 - i];
       this.pcmdataR[i] = this.PCMR[this.numsamples - 1 - i];
     }
-  },
+  }
 
-  detectFromSamples: function () {
+  detectFromSamples() {
     this.vol_old = this.vol;
     this.bass = 0;
     this.mid = 0;
@@ -148,9 +127,9 @@ var Music = Class.extend({
 
     this.beat_buffer_pos++;
     if (this.beat_buffer_pos > 79) this.beat_buffer_pos = 0;
-  },
+  }
 
-  getPCM: function (PCMdata, samples, channel, freq, smoothing) {
+  getPCM(PCMdata, samples, channel, freq, smoothing) {
     PCMd = channel == 0 ? this.PCML : this.PCMR;
 
     PCMdata[0] = PCMd[this.numsamples - 1];
@@ -160,5 +139,5 @@ var Music = Class.extend({
         smoothing * PCMdata[i - 1];
     if (freq) throw Error("fourier transform not implemented");
     //this.rdft(samples, PCMdata);
-  },
-});
+  }
+}

@@ -1,5 +1,5 @@
-var Shaker = Class.extend({
-  init: function () {
+export default class Shaker {
+  constructor() {
     this.settings = {
       meshX: 32,
       meshY: 24,
@@ -66,18 +66,18 @@ var Shaker = Class.extend({
     this.infoBoxPos = -1;
     this.createInfoBox();
     this.timeKeeper.StartPreset();
-  },
+  }
 
-  reset: function () {
+  reset() {
     this.mspf = 0;
     this.timed = 0;
     this.timestart = 0;
     this.count = 0;
     this.fpsstart = 0;
     this.music.reset();
-  },
+  }
 
-  renderFrame: function () {
+  renderFrame() {
     this.timestart = TimeKeeper.getTicks(this.timeKeeper.startTime);
     this.timeKeeper.UpdateTimers();
     this.mspf = Math.floor(1000.0 / this.settings.fps);
@@ -137,16 +137,16 @@ var Shaker = Class.extend({
       TimeKeeper.getTicks(this.timeKeeper.startTime) - this.timestart;
     if (timediff < this.mspf) return Math.floor(this.mspf - timediff);
     return 0;
-  },
+  }
 
-  evaluateSecondPreset: function () {
+  evaluateSecondPreset() {
     this.pipelineContext2.time = this.timeKeeper.GetRunningTime();
     this.pipelineContext2.frame = this.timeKeeper.PresetFrameB();
     this.pipelineContext2.progress = this.timeKeeper.PresetProgressB();
     this.m_activePreset2.Render(this.music, this.pipelineContext2);
-  },
+  }
 
-  selectNext: function (hardCut) {
+  selectNext(hardCut) {
     if (this.presetPos >= this.presetNames.length - 1) return;
     if (!hardCut) this.timeKeeper.StartSmoothing();
     this.presetPos++;
@@ -156,26 +156,26 @@ var Shaker = Class.extend({
       this.timeKeeper.StartPreset();
     }
     this.presetSwitchedEvent(hardCut, this.presetPos);
-  },
+  }
 
-  switchPreset: function () {
+  switchPreset() {
     var targetPreset = this.loadPreset();
     Renderer.SetPipeline(targetPreset.pipeline());
     return targetPreset;
-  },
+  }
 
-  loadPreset: function () {
+  loadPreset() {
     var preset = Presets[this.presetNames[this.presetPos]];
     return preset;
-  },
+  }
 
-  havePresets: function () {
+  havePresets() {
     return this.presetPos < this.presetNames.length - 1;
-  },
+  }
 
-  presetSwitchedEvent: function () {},
+  presetSwitchedEvent() {}
 
-  createInfoBox: function () {
+  createInfoBox() {
     this.infoBox = document.createElement("div");
     this.infoBox.style.position = "absolute";
     this.infoBox.style.height = "0px";
@@ -193,9 +193,9 @@ var Shaker = Class.extend({
     this.infoBox.style.textAlign = "center";
 
     this.infoBox.style.backgroundColor = "rgba(255,255,255,0.5)";
-  },
+  }
 
-  renderInfoBox: function () {
+  renderInfoBox() {
     if (this.infoBoxPos == -1 && Object.keys(this.infoMessages).length > 0) {
       this.infoBoxPos = 0;
       document.body.appendChild(this.infoBox);
@@ -213,5 +213,5 @@ var Shaker = Class.extend({
       if (this.infoBoxPos == Object.keys(this.infoMessages).length)
         this.infoBoxPos = 0;
     }
-  },
-});
+  }
+}

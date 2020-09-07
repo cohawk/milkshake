@@ -1,44 +1,8 @@
-/**
- * milkshake -- WebGL Milkdrop-esque visualisation (port of projectM)
- * Copyright (C)2011 Matt Gattis and contributors
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * See 'LICENSE.txt' included within this release
- *
- */
+import MPoint from "./MPoint";
+import PerPixelContext from "./PerPixelContext";
 
-var MPoint = Class.extend({
-  init: function (x, y) {
-    this.x = x;
-    this.y = y;
-  },
-});
-
-var PerPixelContext = Class.extend({
-  init: function (x, y, rad, theta, i, j) {
-    this.x = x;
-    this.y = y;
-    this.rad = rad;
-    this.theta = theta;
-    this.i = i;
-    this.j = j;
-  },
-});
-
-var PerPixelMesh = Class.extend({
-  init: function (width, height) {
+export default class PerPixelMesh {
+  constructor(width, height) {
     this.width = width;
     this.height = height;
     this.size = width * height;
@@ -50,7 +14,7 @@ var PerPixelMesh = Class.extend({
       this.p_original[i] = new MPoint(0, 0);
       this.identity[i] = new PerPixelContext(0, 0, 0, 0, 0);
     }
-    for (var j = 0; j < this.height; j++)
+    for (var j = 0; j < this.height; j++) {
       for (var i = 0; i < this.width; i++) {
         var index = j * this.width + i;
         var xval = i / (this.width - 1);
@@ -71,12 +35,13 @@ var PerPixelMesh = Class.extend({
           (xval - 0.5) * 2
         );
       }
-  },
+    }
+  }
 
-  Reset: function () {
+  Reset() {
     for (var i = 0; i < this.size; i++) {
       this.p[i].x = this.p_original[i].x;
       this.p[i].y = this.p_original[i].y;
     }
-  },
-});
+  }
+}
